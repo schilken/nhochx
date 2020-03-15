@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'chart_radar.dart';
+import 'line_chart_filled.dart';
 
 class ChartScreen extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class ChartScreen extends StatelessWidget {
               physics: AlwaysScrollableScrollPhysics(),
               child: Container(
                 height: 600,
-                child: ChartRadar())),
+                child: LineChartFilled())),
           ],
         );
     
