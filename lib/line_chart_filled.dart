@@ -45,53 +45,7 @@ class LineChartFilledState extends State<LineChartFilled> {
           bottom: 100,
           child: LineChart(_controller),
         ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  
-                  Container(
-                      padding: EdgeInsets.only(right: 15.0),
-                      child: Text(
-                        "$_count",
-                        textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: ColorUtils.BLACK,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  
-                  Container(
-                      padding: EdgeInsets.only(right: 15.0),
-                      child: Text(
-                        "${_range.toInt()}",
-                        textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: ColorUtils.BLACK,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ],
-              )
-            ],
-          ),
-        )
+        
       ],
     );
   }
@@ -101,7 +55,7 @@ class LineChartFilledState extends State<LineChartFilled> {
     _controller = LineChartController(
         axisLeftSettingFunction: (axisLeft, controller) {
           axisLeft
-            ..setAxisMaximum(500)
+            ..setAxisMaximum(400)
             ..setAxisMinimum(0)
             ..drawAxisLine = (true)
             ..setDrawZeroLine(true)
@@ -119,16 +73,11 @@ class LineChartFilledState extends State<LineChartFilled> {
           if (formatter1 is A) {
             formatter1.setPainter(controller);
           }
-          // var formatter2 = (controller as LineChartController)
-          //     .data
-          //     .getDataSetByIndex(1)
-          //     .getFillFormatter();
-          // if (formatter2 is B) {
-          //   formatter2.setPainter(controller);
-          // }
         },
         xAxisSettingFunction: (xAxis, controller) {
-          xAxis.enabled = (false);
+          xAxis.enabled = (true);
+          xAxis..drawGridLines = (true);
+          xAxis.setLabelCount1(15);
         },
         drawBorders: true,
         drawGridBackground: true,
@@ -137,7 +86,7 @@ class LineChartFilledState extends State<LineChartFilled> {
         scaleXEnabled: true,
         scaleYEnabled: true,
         pinchZoomEnabled: false,
-        gridBackColor: _fillColor,
+        //gridBackColor: _fillColor,
         backgroundColor: ColorUtils.WHITE,
         description: desc);
   }
@@ -145,26 +94,25 @@ class LineChartFilledState extends State<LineChartFilled> {
   void _initLineData(int count, double range) {
     List<Entry> values1 = new List();
 
-    for (int i = 0; i < count; i++) {
-      double val = (random.nextDouble() * range) + 50;
-      values1.add(new Entry(x: i.toDouble(), y: val));
-    }
-
-    // List<Entry> values2 = new List();
-
-    // for (int i = 0; i < count; i++) {
-    //   double val = (random.nextDouble() * range) + 450;
-    //   values2.add(new Entry(x: i.toDouble(), y: val));
-    // }
-
-    LineDataSet set1; //, set2;
+    values1.add(new Entry(x: 0, y: 1));
+    values1.add(new Entry(x: 1, y: 8));
+    values1.add(new Entry(x: 2, y: 11));
+    values1.add(new Entry(x: 8, y: 17));
+    values1.add(new Entry(x: 9, y: 21));
+    values1.add(new Entry(x: 11, y: 48));
+    values1.add(new Entry(x: 12, y: 91));
+    values1.add(new Entry(x: 13, y: 133));
+    values1.add(new Entry(x: 14, y: 191));
+    values1.add(new Entry(x: 15, y: 282));
+ 
+   LineDataSet set1; 
 
     // create a dataset and give it a type
     set1 = new LineDataSet(values1, "DataSet 1");
 
     set1.setAxisDependency(AxisDependency.LEFT);
     set1.setColor1(Color.fromARGB(255, 255, 241, 46));
-    set1.setDrawCircles(false);
+    set1.setDrawCircles(true);
     set1.setLineWidth(2);
     set1.setCircleRadius(3);
     set1.setFillAlpha(255);
@@ -174,29 +122,14 @@ class LineChartFilledState extends State<LineChartFilled> {
     set1.setDrawCircleHole(false);
     set1.setFillFormatter(A());
 
-    // create a dataset and give it a type
-    // set2 = new LineDataSet(values2, "DataSet 2");
-    // set2.setAxisDependency(AxisDependency.LEFT);
-    // set2.setColor1(Color.fromARGB(255, 255, 241, 46));
-    // set2.setDrawCircles(false);
-    // set2.setLineWidth(2);
-    // set2.setCircleRadius(3);
-    // set2.setFillAlpha(255);
-    // set2.setDrawFilled(true);
-    // set2.setFillColor(ColorUtils.WHITE);
-    // set2.setDrawCircleHole(false);
-    // set2.setHighLightColor(Color.fromARGB(255, 244, 117, 117));
-    // set2.setFillFormatter(B());
-
     // create a data object with the data sets
-    _controller.data = LineData.fromList(List()..add(set1)); // ..add(set2));
-    _controller.data.setDrawValues(false);
+    _controller.data = LineData.fromList(List()..add(set1));
+    _controller.data.setDrawValues(true);
 
     setState(() {});
   }
 
-  Color _fillColor = Color.fromARGB(150, 51, 181, 229);
-
+  //Color _fillColor = Color.fromARGB(150, 51, 181, 229);
 
 }
 
@@ -214,16 +147,3 @@ class A implements IFillFormatter {
   }
 }
 
-class B implements IFillFormatter {
-  LineChartController _controller;
-
-  void setPainter(LineChartController controller) {
-    _controller = controller;
-  }
-
-  @override
-  double getFillLinePosition(
-      ILineDataSet dataSet, LineDataProvider dataProvider) {
-    return _controller?.painter?.axisLeft?.axisMinimum;
-  }
-}
