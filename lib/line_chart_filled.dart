@@ -89,6 +89,9 @@ class LineChartFilledState extends State<LineChartFilled> {
         //gridBackColor: _fillColor,
         backgroundColor: ColorUtils.WHITE,
         description: desc);
+        _controller.animator
+      ..reset()
+      ..animateX1(3000);
   }
 
   void _initLineData(int count, double range) {

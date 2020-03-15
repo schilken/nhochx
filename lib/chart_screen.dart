@@ -10,9 +10,17 @@ class ChartScreen extends StatelessWidget {
           children: <Widget>[
             SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
-              child: Container(
-                height: 600,
-                child: LineChartFilled())),
+              child: Column(
+                children: <Widget>[
+                  Text("Infizierte in Hessen seit 28.2.2020",
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),),
+                  Container(
+                    height: 600,
+                    child: LineChartFilled()),
+                ],
+              )),
           ],
         );
     
