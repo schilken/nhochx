@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mp_chart/mp/chart/line_chart.dart';
 import 'package:mp_chart/mp/controller/line_chart_controller.dart';
 import 'package:mp_chart/mp/core/data/line_data.dart';
@@ -12,6 +13,20 @@ import 'package:mp_chart/mp/core/entry/entry.dart';
 import 'package:mp_chart/mp/core/enums/axis_dependency.dart';
 import 'package:mp_chart/mp/core/fill_formatter/i_fill_formatter.dart';
 import 'package:mp_chart/mp/core/utils/color_utils.dart';
+import 'package:mp_chart/mp/core/value_formatter/value_formatter.dart';
+
+class Formatter extends ValueFormatter {
+  NumberFormat _format;
+
+  Formatter() : super() {
+    _format = NumberFormat("######");
+  }
+
+  @override
+  String getFormattedValue1(double value) {
+    return _format.format(value);
+  }
+}
 
 class LineChartFilled extends StatefulWidget {
   @override
@@ -22,6 +37,7 @@ class LineChartFilled extends StatefulWidget {
 
 class LineChartFilledState extends State<LineChartFilled> {
   LineChartController _controller;
+  ValueFormatter _valueFormatter = Formatter();
   var random = Random(1);
   int _count = 20;
   double _range = 300.0;
@@ -51,11 +67,14 @@ class LineChartFilledState extends State<LineChartFilled> {
   }
 
   void _initController() {
-    var desc = Description()..enabled = false;
+
+    var desc = Description()
+    ..enabled = false
+    ..text = "ok";
     _controller = LineChartController(
         axisLeftSettingFunction: (axisLeft, controller) {
           axisLeft
-            ..setAxisMaximum(400)
+            //..setAxisMaximum(400)
             ..setAxisMinimum(0)
             ..drawAxisLine = (true)
             ..setDrawZeroLine(true)
@@ -91,7 +110,7 @@ class LineChartFilledState extends State<LineChartFilled> {
         description: desc);
         _controller.animator
       ..reset()
-      ..animateX1(3000);
+      ..animateX1(5000);
   }
 
   void _initLineData(int count, double range) {
@@ -100,13 +119,17 @@ class LineChartFilledState extends State<LineChartFilled> {
     values1.add(new Entry(x: 0, y: 1));
     values1.add(new Entry(x: 1, y: 8));
     values1.add(new Entry(x: 2, y: 11));
-    values1.add(new Entry(x: 8, y: 17));
-    values1.add(new Entry(x: 9, y: 21));
+    values1.add(new Entry(x: 5, y: 15));
+    values1.add(new Entry(x: 6, y: 17));
+    values1.add(new Entry(x: 7, y: 17));
+    values1.add(new Entry(x: 8, y: 20));
+    values1.add(new Entry(x: 9, y: 27));
     values1.add(new Entry(x: 11, y: 48));
     values1.add(new Entry(x: 12, y: 91));
     values1.add(new Entry(x: 13, y: 133));
     values1.add(new Entry(x: 14, y: 191));
     values1.add(new Entry(x: 15, y: 282));
+    values1.add(new Entry(x: 16, y: 342));
  
    LineDataSet set1; 
 
@@ -122,12 +145,16 @@ class LineChartFilledState extends State<LineChartFilled> {
     set1.setDrawFilled(true);
     set1.setFillColor(ColorUtils.RED);
     set1.setHighLightColor(Color.fromARGB(255, 244, 117, 117));
-    set1.setDrawCircleHole(false);
+    set1.setDrawCircleHole(true);
     set1.setFillFormatter(A());
-
+   
     // create a data object with the data sets
     _controller.data = LineData.fromList(List()..add(set1));
+    
     _controller.data.setDrawValues(true);
+    _controller.data.setValueTextSize(20);
+    _controller.data.setValueTextColor(ColorUtils.RED);
+    _controller.data.setValueFormatter(_valueFormatter);
 
     setState(() {});
   }
