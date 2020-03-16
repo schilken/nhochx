@@ -6,22 +6,34 @@ import 'app_model.dart';
 import 'line_chart_filled.dart';
 
 class ChartScreen extends StatefulWidget {
+
+  final AppModel appModel;
+  
+  ChartScreen(this.appModel);
+
   @override
   _ChartScreenState createState() => _ChartScreenState();
 }
 
 class _ChartScreenState extends State<ChartScreen> {
   TextEditingController _textEditingController = TextEditingController();
+  bool debounceActive = false;
 
   @override
   void initState() {
+    _textEditingController.addListener(() async {
+      if (debounceActive) return null;
+      debounceActive = true;
+      await Future.delayed(Duration(seconds: 2));
+      debounceActive = false;
+      widget.appModel.updateValues(_textEditingController.text);
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final appModel = Provider.of<AppModel>(context);
-    _textEditingController.text = appModel.values;
+    _textEditingController.text = widget.appModel.values;
     return Scaffold(
       appBar: AppBar(
         title: Text("Sars-COV-2 Hessen"),

@@ -14,6 +14,9 @@ import 'package:mp_chart/mp/core/enums/axis_dependency.dart';
 import 'package:mp_chart/mp/core/fill_formatter/i_fill_formatter.dart';
 import 'package:mp_chart/mp/core/utils/color_utils.dart';
 import 'package:mp_chart/mp/core/value_formatter/value_formatter.dart';
+import 'package:provider/provider.dart';
+
+import 'app_model.dart';
 
 class Formatter extends ValueFormatter {
   NumberFormat _format;
@@ -38,20 +41,22 @@ class LineChartFilled extends StatefulWidget {
 class LineChartFilledState extends State<LineChartFilled> {
   LineChartController _controller;
   ValueFormatter _valueFormatter = Formatter();
-  var random = Random(1);
-  int _count = 20;
-  double _range = 300.0;
 
   @override
   void initState() {
     _initController();
-    _initLineData(_count, _range);
+   // _initLineData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    
+    print("LineChartFilledState build");
+    _controller.animator
+      ..reset()
+      ..animateX1(3000);
+    final appModel = Provider.of<AppModel>(context);
+    _initLineData(appModel);
     return Stack(
       children: <Widget>[
         Positioned(
@@ -61,16 +66,13 @@ class LineChartFilledState extends State<LineChartFilled> {
           bottom: 0,
           child: LineChart(_controller),
         ),
-        
       ],
     );
   }
 
   void _initController() {
-
     var desc = Description()
-    ..enabled = false
-    ..text = "ok";
+      ..enabled = false;
     _controller = LineChartController(
         axisLeftSettingFunction: (axisLeft, controller) {
           axisLeft
@@ -108,33 +110,16 @@ class LineChartFilledState extends State<LineChartFilled> {
         //gridBackColor: _fillColor,
         backgroundColor: ColorUtils.WHITE,
         description: desc);
-        _controller.animator
-      ..reset()
-      ..animateX1(5000);
   }
 
-  void _initLineData(int count, double range) {
-    List<Entry> values1 = new List();
+  void _initLineData(AppModel appModel) {
+    List<Entry> entries = new List();
+    for (var xyValue in appModel.xyValues) {
+      entries.add(Entry(x: xyValue.x, y: xyValue.y));
+    }
 
-    values1.add(new Entry(x: 0, y: 1));
-    values1.add(new Entry(x: 1, y: 8));
-    values1.add(new Entry(x: 2, y: 11));
-    values1.add(new Entry(x: 5, y: 15));
-    values1.add(new Entry(x: 6, y: 17));
-    values1.add(new Entry(x: 7, y: 17));
-    values1.add(new Entry(x: 8, y: 20));
-    values1.add(new Entry(x: 9, y: 27));
-    values1.add(new Entry(x: 11, y: 48));
-    values1.add(new Entry(x: 12, y: 91));
-    values1.add(new Entry(x: 13, y: 133));
-    values1.add(new Entry(x: 14, y: 191));
-    values1.add(new Entry(x: 15, y: 282));
-    values1.add(new Entry(x: 16, y: 342));
-    
-   LineDataSet set1; 
-
-    // create a dataset and give it a type
-    set1 = new LineDataSet(values1, "DataSet 1");
+    LineDataSet set1;
+    set1 = new LineDataSet(entries, "DataSet 1");
 
     set1.setAxisDependency(AxisDependency.LEFT);
     set1.setColor1(Color.fromARGB(255, 255, 241, 46));
@@ -147,10 +132,10 @@ class LineChartFilledState extends State<LineChartFilled> {
     set1.setHighLightColor(Color.fromARGB(255, 244, 117, 117));
     set1.setDrawCircleHole(true);
     set1.setFillFormatter(A());
-   
+
     // create a data object with the data sets
     _controller.data = LineData.fromList(List()..add(set1));
-    
+
     _controller.data.setDrawValues(true);
     _controller.data.setValueTextSize(20);
     _controller.data.setValueTextColor(ColorUtils.RED);
@@ -158,8 +143,6 @@ class LineChartFilledState extends State<LineChartFilled> {
 
     setState(() {});
   }
-
-  //Color _fillColor = Color.fromARGB(150, 51, 181, 229);
 
 }
 
@@ -176,4 +159,3 @@ class A implements IFillFormatter {
     return _controller?.painter?.axisLeft?.axisMinimum;
   }
 }
-
