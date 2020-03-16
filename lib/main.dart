@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'app_model.dart';
 import 'chart_screen.dart';
 
 void main() {
-  runApp(MyApp());
+    runApp(
+    ChangeNotifierProvider<AppModel>(
+      create: (context) => AppModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
