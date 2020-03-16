@@ -58,7 +58,7 @@ class LineChartFilledState extends State<LineChartFilled> {
           right: 0,
           left: 0,
           top: 0,
-          bottom: 100,
+          bottom: 0,
           child: LineChart(_controller),
         ),
         
@@ -130,7 +130,7 @@ class LineChartFilledState extends State<LineChartFilled> {
     values1.add(new Entry(x: 14, y: 191));
     values1.add(new Entry(x: 15, y: 282));
     values1.add(new Entry(x: 16, y: 342));
- 
+    
    LineDataSet set1; 
 
     // create a dataset and give it a type
