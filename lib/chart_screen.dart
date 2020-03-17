@@ -78,6 +78,10 @@ class _ChartScreenState extends State<ChartScreen> {
                   linkLabel: "Created with Flutter Web Beta",
                   url: "https://flutter.dev/web",
                 ),
+                WebLink(
+                  linkLabel: "Source on Github",
+                  url: "https://github.com/schilken/nhochx",
+                ),
               ],
             ),
             Container(
