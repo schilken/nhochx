@@ -38,7 +38,7 @@ class _ChartScreenState extends State<ChartScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sars-COV-2 Hessen"),
+        title: Text("SARS-CoV-2 Hessen, Germany"),
         centerTitle: true,
       ),
       body: Center(
@@ -50,7 +50,7 @@ class _ChartScreenState extends State<ChartScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Infected persons in Hessen, Germany since 28.2.2020",
+                "Infected persons in Hessen*, Germany since 28.2.2020",
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
@@ -58,8 +58,13 @@ class _ChartScreenState extends State<ChartScreen> {
               ),
             ),
             Container(height: 500, child: LineChartFilled()),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("* Population of Hessen: 6.3 million"),
+                ),
                 WebLink(
                     linkLabel:
                         "Data Source: soziales.hessen.de/gesundheit/infektionsschutz (german)",
@@ -117,7 +122,7 @@ class _ChartScreenState extends State<ChartScreen> {
 //                        child: Text("Write Data to Clipboard"),
 //                      ),
                       Text(
-                          "Edit your data outside and copy&paste it into the field"),
+                          "Edit your data outside\nand copy&paste it into the field"),
                     ],
                   ),
                 ],
