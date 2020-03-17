@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'app_model.dart';
 import 'line_chart_filled.dart';
 
 class ChartScreen extends StatefulWidget {
-
   final AppModel appModel;
-  
+
   ChartScreen(this.appModel);
 
   @override
@@ -44,21 +44,35 @@ class _ChartScreenState extends State<ChartScreen> {
             SizedBox(
               height: 16,
             ),
-            Text(
-              "Infected in Hessen, Germany since 28.2.2020",
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Infected persons in Hessen, Germany since 28.2.2020",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
             ),
-            Container(height: 600, child: LineChartFilled()),
-            Text(
-              "Data Source:\nhttps://soziales.hessen.de/gesundheit/infektionsschutz/coronavirus-sars-cov-2/taegliche-uebersicht-der-bestaetigten-sars-cov-2-faelle-hessen",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-              ),
+            Container(height: 500, child: LineChartFilled()),
+            Row(
+              children: <Widget>[
+                WebLink(
+                linkLabel:
+                    "Data Source: soziales.hessen.de/gesundheit/infektionsschutz (german)",
+                url:
+                    "https://soziales.hessen.de/gesundheit/infektionsschutz/coronavirus-sars-cov-2/taegliche-uebersicht-der-bestaetigten-sars-cov-2-faelle-hessen"),
+                WebLink(
+                  linkLabel: "Impressum",
+                  url: "http://w3y.de/impressum.html",
+                ),
+                WebLink(
+                  linkLabel: "Created with Flutter Web Beta",
+                  url: "https://flutter.dev/web",
+                ),
+              ],
             ),
+            
             Container(
               padding: EdgeInsets.all(10),
               child: TextField(
@@ -76,14 +90,42 @@ class _ChartScreenState extends State<ChartScreen> {
             SizedBox(
               height: 16,
             ),
-            Text(
-              "Impressum: http://w3y.de/impressum.html - Created with Flutter Web Beta",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-              ),
-            ),
+            
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class WebLink extends StatelessWidget {
+  final String url;
+  final String linkLabel;
+  const WebLink({
+    this.linkLabel,
+    this.url,
+  });
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => _launchURL(url),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          linkLabel,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.blue,
+          ),
         ),
       ),
     );
