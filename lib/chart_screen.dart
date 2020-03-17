@@ -113,14 +113,14 @@ class _ChartScreenState extends State<ChartScreen> {
                         child: Text("Clear Data"),
                       ),
 // TODO Clipboard not working yet in flutter web?
-//                       FlatButton(
-//                        onPressed: () async => widget.appModel.readFromClipboard(),
-//                        child: Text("Read Data from Clipboard"),
-//                      ),
-//                      FlatButton(
-//                        onPressed: () async => widget.appModel.writeToClipboard(),
-//                        child: Text("Write Data to Clipboard"),
-//                      ),
+                      FlatButton(
+                       onPressed: () async => widget.appModel.readFromClipboard(),
+                       child: Text("Read Data from Clipboard"),
+                     ),
+                     FlatButton(
+                       onPressed: () async => widget.appModel.writeToClipboard(),
+                       child: Text("Write Data to Clipboard"),
+                     ),
                       Text(
                           "Edit your data outside\nand copy&paste it into the field"),
                     ],

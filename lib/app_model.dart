@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class XYValue {
   double x;
@@ -53,16 +54,19 @@ class AppModel extends ChangeNotifier {
     return values1;
   }
 
-  // Future<void> readFromClipboard() async {
-  //   _valuesAsSingleString = await FlutterClipboardManager.copyFromClipBoard();
-  //   print("readFromClipboard $_valuesAsSingleString");
-  //   notifyListeners();
-  // }
+  Future<void> readFromClipboard() async {
+    //_valuesAsSingleString = await FlutterClipboardManager.copyFromClipBoard();
+    var clipboardData = await Clipboard.getData('text/plain');
+    _valuesAsSingleString =  clipboardData.text;
+    print("readFromClipboard $_valuesAsSingleString");
+    notifyListeners();
+  }
 
-  // Future<void> writeToClipboard() async {
-  //   print("writeToClipboard $_valuesAsSingleString");
-  //   await FlutterClipboardManager.copyToClipBoard(_valuesAsSingleString);
-  // }
+  Future<void> writeToClipboard() async {
+    print("writeToClipboard $_valuesAsSingleString");
+    var clipboardData = ClipboardData(text: _valuesAsSingleString);
+    await Clipboard.setData(clipboardData);
+  }
 
 // notifyListeners();
 }
