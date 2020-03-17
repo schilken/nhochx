@@ -35,7 +35,7 @@ class _ChartScreenState extends State<ChartScreen> {
   @override
   Widget build(BuildContext context) {
     _textEditingController.text = widget.appModel.values;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text("SARS-CoV-2 Hessen, Germany"),
@@ -87,7 +87,7 @@ class _ChartScreenState extends State<ChartScreen> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 150,
+                    width: 110,
                     child: TextField(
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
@@ -112,17 +112,35 @@ class _ChartScreenState extends State<ChartScreen> {
                         },
                         child: Text("Clear Data"),
                       ),
-                      Text(
-                          "Edit your data outside\nand read it from clipboard"),
                       OutlineButton(
-                       onPressed: () async => _textEditingController.text = await widget.appModel.readFromClipboard(),
-                       child: Text("Read Data from Clipboard"),
-                     ),
-                     OutlineButton(
-                       onPressed: () async => widget.appModel.writeToClipboard(),
-                       child: Text("Write Data to Clipboard"),
-                     ),
-                      
+                        onPressed: () async => _textEditingController.text =
+                            await widget.appModel.readFromClipboard(),
+                        child: Text("Read Data from Clipboard"),
+                      ),
+                      OutlineButton(
+                        onPressed: () async =>
+                            widget.appModel.writeToClipboard(),
+                        child: Text("Write Data to Clipboard"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            "Edit your data outside\nand read it from clipboard"),
+                      ),
+                      Text(
+                        "The buttons don't work with mobile browser (yet).",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        "You can paste directly into the field.",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ],
                   ),
                 ],

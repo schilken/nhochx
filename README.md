@@ -1,16 +1,34 @@
 # nhochx
 
-A new Flutter project.
+Show x-y-chart using Flutter Web and mp_chart
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Prepare for local run and build:
+```
+flutter channel master
+flutter upgrade
+flutter config --enable-web
+```
 
-A few resources to get you started if this is your first Flutter project:
+Run in Chrome:
+`flutter run -d Chrome`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Build for deployment:
+`flutter build web`
+
+Deploy to web server: copy contents of folder build/web:
+
+```
+$ ls -l
+total 5224
+drwxr-xr-x  7 alfred  staff      224 17 Mär 13:07 assets
+-rw-r--r--  1 alfred  staff      917 17 Mär 11:09 favicon.png
+-rw-r--r--  1 alfred  staff     1344 17 Mär 13:23 flutter_service_worker.js
+drwxr-xr-x  4 alfred  staff      128 17 Mär 13:07 icons
+-rw-r--r--  1 alfred  staff     1118 17 Mär 11:09 index.html
+-rw-r--r--  1 alfred  staff  1381425 17 Mär 13:23 main.dart.js
+-rw-r--r--  1 alfred  staff  1273075 17 Mär 13:23 main.dart.js.map
+-rw-r--r--  1 alfred  staff      568 17 Mär 11:09 manifest.json
+```
