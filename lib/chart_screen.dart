@@ -105,24 +105,24 @@ class _ChartScreenState extends State<ChartScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton(
+                      OutlineButton(
                         onPressed: () {
                           _textEditingController.text = '';
                           _focusNode.requestFocus();
                         },
                         child: Text("Clear Data"),
                       ),
-// TODO Clipboard not working yet in flutter web?
-                      FlatButton(
-                       onPressed: () async => widget.appModel.readFromClipboard(),
+                      Text(
+                          "Edit your data outside\nand read it from clipboard"),
+                      OutlineButton(
+                       onPressed: () async => _textEditingController.text = await widget.appModel.readFromClipboard(),
                        child: Text("Read Data from Clipboard"),
                      ),
-                     FlatButton(
+                     OutlineButton(
                        onPressed: () async => widget.appModel.writeToClipboard(),
                        child: Text("Write Data to Clipboard"),
                      ),
-                      Text(
-                          "Edit your data outside\nand copy&paste it into the field"),
+                      
                     ],
                   ),
                 ],
