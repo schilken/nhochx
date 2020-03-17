@@ -17,6 +17,7 @@ class ChartScreen extends StatefulWidget {
 class _ChartScreenState extends State<ChartScreen> {
   TextEditingController _textEditingController = TextEditingController();
   bool debounceActive = false;
+  FocusNode _focusNode;
 
   @override
   void initState() {
@@ -27,12 +28,14 @@ class _ChartScreenState extends State<ChartScreen> {
       debounceActive = false;
       widget.appModel.updateValues(_textEditingController.text);
     });
+    _focusNode = FocusNode();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     _textEditingController.text = widget.appModel.values;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("Sars-COV-2 Hessen"),
@@ -58,10 +61,10 @@ class _ChartScreenState extends State<ChartScreen> {
             Row(
               children: <Widget>[
                 WebLink(
-                linkLabel:
-                    "Data Source: soziales.hessen.de/gesundheit/infektionsschutz (german)",
-                url:
-                    "https://soziales.hessen.de/gesundheit/infektionsschutz/coronavirus-sars-cov-2/taegliche-uebersicht-der-bestaetigten-sars-cov-2-faelle-hessen"),
+                    linkLabel:
+                        "Data Source: soziales.hessen.de/gesundheit/infektionsschutz (german)",
+                    url:
+                        "https://soziales.hessen.de/gesundheit/infektionsschutz/coronavirus-sars-cov-2/taegliche-uebersicht-der-bestaetigten-sars-cov-2-faelle-hessen"),
                 WebLink(
                   linkLabel: "Impressum",
                   url: "http://w3y.de/impressum.html",
@@ -72,25 +75,57 @@ class _ChartScreenState extends State<ChartScreen> {
                 ),
               ],
             ),
-            
             Container(
               padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(8),
-                  border: OutlineInputBorder(),
-                ),
-                showCursor: true,
-                controller: _textEditingController,
-                maxLines: null,
-                autofocus: true,
-                //cursorWidth: 4,
+              height: 300,
+              width: 400,
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: 150,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        border: OutlineInputBorder(),
+                      ),
+                      showCursor: true,
+                      controller: _textEditingController,
+                      maxLines: null,
+                      autofocus: true,
+                      focusNode: _focusNode,
+                      //cursorWidth: 4,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          _textEditingController.text = '';
+                          _focusNode.requestFocus();
+                        },
+                        child: Text("Clear Data"),
+                      ),
+// TODO Clipboard not working yet in flutter web?
+//                       FlatButton(
+//                        onPressed: () async => widget.appModel.readFromClipboard(),
+//                        child: Text("Read Data from Clipboard"),
+//                      ),
+//                      FlatButton(
+//                        onPressed: () async => widget.appModel.writeToClipboard(),
+//                        child: Text("Write Data to Clipboard"),
+//                      ),
+                      Text(
+                          "Edit your data outside and copy&paste it into the field"),
+                    ],
+                  ),
+                ],
               ),
             ),
             SizedBox(
               height: 16,
             ),
-            
           ],
         ),
       ),

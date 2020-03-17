@@ -53,5 +53,16 @@ class AppModel extends ChangeNotifier {
     return values1;
   }
 
+  // Future<void> readFromClipboard() async {
+  //   _valuesAsSingleString = await FlutterClipboardManager.copyFromClipBoard();
+  //   print("readFromClipboard $_valuesAsSingleString");
+  //   notifyListeners();
+  // }
+
+  // Future<void> writeToClipboard() async {
+  //   print("writeToClipboard $_valuesAsSingleString");
+  //   await FlutterClipboardManager.copyToClipBoard(_valuesAsSingleString);
+  // }
+
 // notifyListeners();
 }
