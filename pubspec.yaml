@@ -40,9 +40,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-assets:
+  assets:
     - assets/img/
-fonts:
+    - assets/data_values.txt
+  fonts:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf

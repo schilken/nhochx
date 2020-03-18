@@ -9,27 +9,22 @@ class XYValue {
 }
 
 class AppModel extends ChangeNotifier {
-  String _valuesAsSingleString = """
-0, 1
-1, 8
-2, 11
-5, 15
-6, 17
-7, 17
-8, 20
-9, 27
-11, 48
-12, 91
-13, 133
-14, 191
-15, 282
-16, 342
-""";
+
+  AppModel() {
+    print("AppModel created");
+  }
+  String _valuesAsSingleString;
+
+  Future<void> loadAsset() async {
+    _valuesAsSingleString =
+        await rootBundle.loadString('assets/data_values.txt');
+    //print("loadAsset $_valuesAsSingleString");
+  }
 
   String get values => _valuesAsSingleString;
 
   updateValues(String newValues) {
-  //print("updateValues $newValues");
+    //print("updateValues $newValues");
     _valuesAsSingleString = newValues;
     notifyListeners();
   }
@@ -38,7 +33,7 @@ class AppModel extends ChangeNotifier {
     List<XYValue> values1 = [];
     var lines = _valuesAsSingleString.split('\n');
     for (var line in lines) {
-      RegExp regex = RegExp(r' *([0-9]+) *, *([0-9]+) *$', multiLine: false);
+      RegExp regex = RegExp(r' *([0-9]+) *: *([0-9]+) *$', multiLine: false);
       if (regex.hasMatch(line)) {
         String xValue = regex.firstMatch(line).group(1);
         String yValue = regex.firstMatch(line).group(2);
@@ -48,7 +43,7 @@ class AppModel extends ChangeNotifier {
         values1.add(XYValue(x: x, y: y));
       }
     }
-    if(values1.isEmpty) {
+    if (values1.isEmpty) {
       values1.add(XYValue(x: 0, y: 0));
     }
     return values1;
@@ -57,7 +52,7 @@ class AppModel extends ChangeNotifier {
   Future<String> readFromClipboard() async {
     //_valuesAsSingleString = await FlutterClipboardManager.copyFromClipBoard();
     var clipboardData = await Clipboard.getData('text/plain');
-    _valuesAsSingleString =  clipboardData.text;
+    _valuesAsSingleString = clipboardData.text;
     //print("readFromClipboard $_valuesAsSingleString");
     notifyListeners();
     return _valuesAsSingleString;
@@ -68,6 +63,4 @@ class AppModel extends ChangeNotifier {
     var clipboardData = ClipboardData(text: _valuesAsSingleString);
     await Clipboard.setData(clipboardData);
   }
-
-// notifyListeners();
 }
