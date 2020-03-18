@@ -71,6 +71,13 @@ class _ChartScreenState extends State<ChartScreen> {
                     url:
                         "https://soziales.hessen.de/gesundheit/infektionsschutz/coronavirus-sars-cov-2/taegliche-uebersicht-der-bestaetigten-sars-cov-2-faelle-hessen"),
                 WebLink(
+                    linkLabel:
+                        "Data Source: Robert-Koch-Institut(RKI) (german)",
+                    url:
+                        "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"),
+                
+                
+                WebLink(
                   linkLabel: "Impressum",
                   url: "http://w3y.de/impressum.html",
                 ),
