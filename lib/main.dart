@@ -4,10 +4,13 @@ import 'package:provider/provider.dart';
 import 'app_model.dart';
 import 'chart_screen.dart';
 
-void main() {
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    AppModel _appModel = AppModel();
+    await _appModel.loadAsset();
     runApp(
-    ChangeNotifierProvider<AppModel>(
-      create: (context) => AppModel(),
+    ChangeNotifierProvider<AppModel>.value(
+      value: _appModel,
       child: MyApp(),
     ),
   );
