@@ -43,4 +43,4 @@ drwxr-xr-x  4 alfred  staff      128 17 Mär 13:07 icons
 -rw-r--r--  1 alfred  staff      568 17 Mär 11:09 manifest.json
 ```
 
-<img src="images_for_readme/corona-hessen.gif"/>
+<img src="images_for_readme/corona-hessen-low.gif"/>
