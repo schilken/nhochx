@@ -11,6 +11,16 @@ flutter upgrade
 flutter config --enable-web
 ```
 
+The initial data values are read from `assets/data_values.txt`.
+
+Values are formatted like this:
+```
+0: 1
+1: 8
+2: 11
+5: 15
+```
+
 Run in Chrome:
 `flutter run -d Chrome`
 
